@@ -7,9 +7,11 @@ from flask import current_app as app
 from flask import Blueprint, render_template, send_file, abort
 from flask import send_from_directory
 
-from app.main import socket
 
 main = Blueprint("main", __name__)
+
+from app.main import socket
+from app.main import sign
 
 
 @main.route("/", methods=['GET'])
