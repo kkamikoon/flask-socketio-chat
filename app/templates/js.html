@@ -12,11 +12,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+  var my_idx = "{{get_user().idx}}";
+
   var namespace = "/socket/main"
   var _socket = io(
     namespace,
     {
-      transports: ['polling','websocket'],
+      transports: ['polling', 'websocket'],
     }
   );
   _socket.on('announce', function(msg) {
@@ -32,37 +34,67 @@
     else if (msg.category == "info"){
       toastr.info(msg.desc)
     }
-  }); // socket_main.on end
+  });
 
-  $('.toastrDefaultSuccess').click(function() {
-    $.get("/test");
+  // Load chatting
+  _socket.on('chat_message', function(msg) {
+    if (msg.error) {
+      console.log(msg.error);
+      return false;
+    }
+    else {
+      _template = msg.template;
+
+      if (msg.user_idx === my_idx){
+        _template = _template.replace("__chatting_place__", "right");
+      }
+      else{
+        _template = _template.replace("__chatting_place__", "left");
+      }
+      $(".direct-chat-messages").append(_template);
+    }
   });
-  $('.toastrDefaultWarning').click(function() {
-    $.get("/test");
+
+  // Send chatting
+  $("#chat_form").submit(function(e){    
+    message = $('#message').val(); $('#message').val("");
+    _socket.emit("chat_message", {"message": message})
+    return false;
   });
-  $('.toastrDefaultError').click(function() {
-    $.get("/test");
+
+  $('#submit_button').click(function(){
+    $("#chat_form").submit();
   });
-  $('.toastrDefaultInfo').click(function() {
-    $.get("/test");
+
+
+  $('.toastrSuccess').click(function() {
+    _socket.emit("button_click", {"desc": "Someone clicked `success` button.", "category": "success"});
+  });
+  $('.toastrWarning').click(function() {
+    _socket.emit("button_click", {"desc": "Someone clicked `warning` button.", "category": "warning"});
+  });
+  $('.toastrError').click(function() {
+    _socket.emit("button_click",  {"desc": "Someone clicked `error` button.", "category": "error"});
+  });
+  $('.toastrInfo').click(function() {
+    _socket.emit("button_click",  {"desc": "Someone clicked `error` button.", "category": "error"});
   });
 </script>
 
 <script>
-    var msg = "";
-    toastr_map = {
-      "success": toastr.success,
-      "error": toastr.error,
-      "warning": toastr.warning,
-      "info": toastr.info
-    }
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            msg = "{{ message }}";
-            toastr_map["{{ category }}"](msg);
-        {% endfor %}
-    {% endwith %}
+  var msg = "";
+  toastr_map = {
+    "success": toastr.success,
+    "error": toastr.error,
+    "warning": toastr.warning,
+    "info": toastr.info
+  }
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      msg = "{{ message }}";
+      toastr_map["{{ category }}"](msg);
+    {% endfor %}
+  {% endwith %}
 </script>
 
 <!-- ./Toastr -->

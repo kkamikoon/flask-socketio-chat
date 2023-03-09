@@ -25,6 +25,7 @@ def signin():
         user_info = db.session.query(
             Users.email,
             Users.name,
+            Users.idx,
         ).filter(
             Users.email == email,
             Users.password == password
@@ -53,8 +54,8 @@ def signup():
             return redirect(url_for(".signin"))
         
         # Query example 2 - Check unique user
-        obj = Users.query.filter_by(email=email).one_or_none()
-        if not obj:
+        obj = Users.query.filter_by(name=name, email=email).one_or_none()
+        if obj:
             flash(message="User already exists.", category="error")
             return redirect(url_for(".signin"))
 

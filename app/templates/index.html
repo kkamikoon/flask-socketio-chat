@@ -7,22 +7,22 @@
         <div class="row">
           <div class="col-lg-3 col-6">
             <div class="small-box">
-              <button type="button" class="btn btn-block btn-outline-success toastrDefaultSuccess">Success</button>
+              <button type="button" class="btn btn-block btn-outline-success toastrSuccess">Success</button>
             </div>
           </div>
           <div class="col-lg-3 col-6">
             <div class="small-box">
-              <button type="button" class="btn btn-block btn-outline-warning toastrDefaultWarning">Warning</button>
+              <button type="button" class="btn btn-block btn-outline-warning toastrWarning">Warning</button>
             </div>
           </div>
           <div class="col-lg-3 col-6">
             <div class="small-box">
-              <button type="button" class="btn btn-block btn-outline-danger toastrDefaultError">Danger</button>
+              <button type="button" class="btn btn-block btn-outline-danger toastrError">Danger</button>
             </div>
           </div>
           <div class="col-lg-3 col-6">
             <div class="small-box">
-              <button type="button" class="btn btn-block btn-outline-primary toastrDefaultInfo">Primary</button>
+              <button type="button" class="btn btn-block btn-outline-primary toastrInfo">Primary</button>
             </div>
           </div>
         </div>
@@ -61,11 +61,11 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <form action="/chat/input" method="post">
+                <form id="chat_form">
                   <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <input type="text" id="message" name="message" placeholder="Type Message ..." class="form-control">
                     <span class="input-group-append">
-                      <button type="button" class="btn btn-warning" onclick="submit();">Send</button>
+                      <button type="button" class="btn btn-warning" id="submit_button">Send</button>
                     </span>
                   </div>
                 </form>

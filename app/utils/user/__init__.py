@@ -4,11 +4,16 @@ from app.model import db, Users
 
 
 def get_user():
-    name = session.get("name")
-    email = session.get("email")
-
-    return Users.query.filter_by(name=name, email=email).one_or_none()
+    user = Users.query.filter_by(idx=session.get("idx")).one_or_none()
+    return user
 
 
 def authed():
     return bool(session.get("name", False))
+
+
+def my_idx():
+    user = Users.query.filter_by(idx=session.get("idx")).one_or_none()
+    if user:
+        return user.idx
+    return ""

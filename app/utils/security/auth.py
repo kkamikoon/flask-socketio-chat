@@ -8,6 +8,7 @@ def signin_user(user):
 
     session["name"] = user.name
     session["email"] = user.email
+    session["idx"] = user.idx
 
 
 def signout_user():
