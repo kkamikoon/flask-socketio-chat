@@ -85,12 +85,21 @@
                   <p> Main </p>
                 </a>
               </li>
+              {% if authed() %}
+              <li class="nav-item">
+                <a href="/sign/out" class="nav-link">
+                  <i class="fas fa-user-slash"></i>
+                  <p> Sign-Out</p>
+                </a>
+              </li>
+              {% else %}
               <li class="nav-item">
                 <a href="/sign/in" class="nav-link">
-                  <i class="fas fa-users"></i>
+                  <i class="fas fa-user"></i>
                   <p> Sign </p>
                 </a>
               </li>
+              {% endif %}
             </ul>
           </li>
         </ul>

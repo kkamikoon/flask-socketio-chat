@@ -1,5 +1,4 @@
 import hashlib
-from flask import current_app as app
 from flask import (
     request,
     flash,
@@ -32,9 +31,11 @@ def signin():
         ).one_or_none()
 
         if user_info == None:
+            flash(message="No matched user information found.", category="error")
             return redirect(url_for(".signin"))
         else:
             signin_user(user_info)
+            flash(message="Successfully signed in.", category="success")
             return redirect(url_for(".index"))
 
     return render_template(f"signin.html")
@@ -53,8 +54,8 @@ def signup():
         
         # Query example 2 - Check unique user
         obj = Users.query.filter_by(email=email).one_or_none()
-        if obj != None:
-            print(f"No unique!!!!!!!!!!!!!")
+        if not obj:
+            flash(message="User already exists.", category="error")
             return redirect(url_for(".signin"))
 
         user = Users(email=email, name=name, password=password)
@@ -63,15 +64,13 @@ def signup():
             db.session.add(user)
             db.session.commit()
         except Exception as e:
-            print(f"[-] failed to add user {e}")
+            flash(message="Unknown error to sign up process.", category="error")
             db.session.rollback()
             return redirect(url_for(".signup"))
         else:
             db.session.commit()
 
-        print("GOOOOD", user)
         return redirect(url_for('.signin'))
-
 
     return render_template(f"signup.html")
 
@@ -79,4 +78,4 @@ def signup():
 @main.route("/sign/out", methods=['GET'])
 def signout():
     signout_user()
-    return render_template(f"index.html")
+    return redirect(url_for(".index"))

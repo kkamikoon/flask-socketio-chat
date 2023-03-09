@@ -48,4 +48,21 @@
   });
 </script>
 
+<script>
+    var msg = "";
+    toastr_map = {
+      "success": toastr.success,
+      "error": toastr.error,
+      "warning": toastr.warning,
+      "info": toastr.info
+    }
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            msg = "{{ message }}";
+            toastr_map["{{ category }}"](msg);
+        {% endfor %}
+    {% endwith %}
+</script>
+
 <!-- ./Toastr -->
