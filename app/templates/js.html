@@ -46,10 +46,10 @@
       _template = msg.template;
 
       if (msg.user_idx === my_idx){
-        _template = _template.replace("__chatting_place__", "right");
+        _template = _template.replaceAll("__chatting_place__", "right");
       }
       else{
-        _template = _template.replace("__chatting_place__", "left");
+        _template = _template.replaceAll("__chatting_place__", "left");
       }
       $(".direct-chat-messages").append(_template);
     }

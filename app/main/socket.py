@@ -42,8 +42,8 @@ def chat_message(msg):
         template = (
             f"<div class='direct-chat-msg __chatting_place__'>" +
             f"\n  <div class='direct-chat-infos clearfix'>" +
-            f"\n    <span class='direct-chat-name float-left'>{_user.name}</span>" +
-            f"\n    <span class='direct-chat-timestamp float-right'>{_time}</span>" +
+            f"\n    <span class='direct-chat-name float-__chatting_place__'>{_user.name}</span>" +
+            f"\n    <span class='direct-chat-timestamp float-__chatting_place__'>{_time}</span>" +
             f"\n  </div>" +
             f"\n  <img class='direct-chat-img' src='static/img/user1-128x128.jpg' alt='message user image'>" +
             f"\n  <div class='direct-chat-text'>" +

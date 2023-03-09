@@ -10,10 +10,3 @@ def get_user():
 
 def authed():
     return bool(session.get("name", False))
-
-
-def my_idx():
-    user = Users.query.filter_by(idx=session.get("idx")).one_or_none()
-    if user:
-        return user.idx
-    return ""
